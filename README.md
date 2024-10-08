@@ -34,7 +34,8 @@ npm install -D tailwindcss postcss autoprefixer npx tailwindcss init -p
 
 Configure TailwindCss(For new project setup but may not require for cloned projects)
 
-Update tailwind.config.js: module.exports = { content: [ "./src/**/*.{html,ts}", ], theme: { extend: {}, }, plugins: [], }
+Update tailwind.config.js:
+module.exports = { content: [ "./src/**/*.{html,ts}", ], theme: { extend: {}, }, plugins: [], }
 
 Include Tailwind In your styles(For new project setup but may not require for cloned projects) Add the following lines to src/styles.css
 
