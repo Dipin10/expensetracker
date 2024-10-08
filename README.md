@@ -1,27 +1,49 @@
-# Expensetracker
+#Budget Tracker App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.7.
+The Budget Tracker Application is a simple web application built with Angular and styled using Tailwind CSS. The application allows users to manage their income and expenses, providing insights into their financial status.
 
-## Development server
+Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+User Registration and Authentication: Users can register and log in to access their financial data.
 
-## Code scaffolding
+Income and Expense Management: Users can add, edit, delete, and view their income and expenses.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Data: Each user can only access their data.
 
-## Build
+Statistics Summary: The application displays total income, total expenses, and the overall balance.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Pagination, Filtering, and Search: Users can navigate through their income and expense records efficiently Search their total income and expenses apply filter for their reoccuring and types of expenses used.
 
-## Running unit tests
+Technologies used
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Angular: Frontend framework for building the application. Tailwind CSS: Utility-first CSS framework for styling. Local Storage: To store user data in the browser.
 
-## Running end-to-end tests
+Project Setup Prerequisites Ensure you have the following installed:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Node.js (version 14 or later) Angular CLI (version 12 or later)
 
-## Further help
+Installation Steps Clone the repository git clone <repository-url> cd expensetracker
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Install Dependencies:
+
+Navigate to the project directory and run: npm install
+
+Install TailwindCss
+
+npm install -D tailwindcss postcss autoprefixer npx tailwindcss init -p
+
+Configure TailwindCss(For new project setup but may not require for cloned projects)
+
+Update tailwind.config.js: module.exports = { content: [ "./src/**/*.{html,ts}", ], theme: { extend: {}, }, plugins: [], }
+
+Include Tailwind In your styles(For new project setup but may not require for cloned projects) Add the following lines to src/styles.css
+
+@tailwind base; @tailwind components; @tailwind utilities;
+
+Run the development Server ng serve
+
+Open your browser and navigate to http://localhost:4200
+
+Components Overview
+
+Auth Component: Handles user registration and authentication. Dashboard Component: Displays user statistics, income, and expenses. Services: Manages authentication and budget operations. Income/Expense Component: Add Edit Delete income/expenses , Search for the income/expenses on basis of their description,Filter and Pagination
