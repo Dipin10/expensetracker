@@ -1,0 +1,72 @@
+<div class="flex items-center justify-center h-screen">
+  <div class="max-w-sm mx-auto p-8 bg-white shadow-lg rounded-lg">
+    <h2 class="text-2xl font-semibold mb-6 text-center">
+      {{ isLoginMode ? "Login" : "Register" }}
+    </h2>
+
+    <form (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label for="username" class="block text-sm font-medium">Username</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+          #usernameInput="ngModel"
+          class="mt-1 block w-full border border-gray-300 p-2 rounded-md"
+        />
+        <div
+          *ngIf="
+            usernameInput.invalid &&
+            (usernameInput.dirty || usernameInput.touched)
+          "
+          class="text-red-500 text-sm"
+        >
+          <span *ngIf="usernameInput.errors?.['required']">
+            Field cannot be empty.
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium">Password</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+          #passwordInput="ngModel"
+          class="mt-1 block w-full border border-gray-300 p-2 rounded-md"
+        />
+        <div
+          *ngIf="
+            passwordInput.invalid &&
+            (passwordInput.dirty || passwordInput.touched)
+          "
+          class="text-red-500 text-sm"
+        >
+          <span *ngIf="passwordInput.errors?.['required']">
+            Field cannot be empty.
+          </span>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="usernameInput.invalid || passwordInput.invalid"
+        class="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+      >
+        {{ isLoginMode ? "Login" : "Register" }}
+      </button>
+    </form>
+
+    <button
+      (click)="toggleMode()"
+      class="w-full mt-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+    >
+      {{ isLoginMode ? "Switch to Register" : "Switch to Login" }}
+    </button>
+  </div>
+</div>

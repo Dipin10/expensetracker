@@ -1,0 +1,199 @@
+<div class="flex items-center justify-center min-h-screen">
+  <div
+    class="max-w-2xl mx-auto p-8 bg-white shadow-lg rounded-lg h-[600px] overflow-y-auto"
+  >
+    <div class="flex items-center gap-6">
+      <a (click)="goBack()" class="cursor-pointer">
+        <mat-icon class="text-[40px] !h-[40px] !w-[40px]"
+          >keyboard_arrow_left</mat-icon
+        >
+      </a>
+      <span class="text-2xl font-semibold mb-6 text-center">
+        Budget Tracker
+      </span>
+    </div>
+
+    <form (ngSubmit)="onAdd()" class="space-y-4">
+      <div>
+        <label for="description" class="block text-sm font-medium"
+          >Description</label
+        >
+        <input
+          type="text"
+          id="description"
+          [(ngModel)]="description"
+          name="description"
+          required
+          #descriptionInput="ngModel"
+          class="mt-1 block w-full border border-gray-300 p-2 rounded-md"
+        />
+      </div>
+
+      <div>
+        <label for="amount" class="block text-sm font-medium">Amount</label>
+        <input
+          type="number"
+          id="amount"
+          [(ngModel)]="amount"
+          name="amount"
+          required
+          #amountInput="ngModel"
+          class="mt-1 block w-full border border-gray-300 p-2 rounded-md"
+        />
+      </div>
+
+      <div>
+        <label for="type" class="block text-sm font-medium">Type</label>
+        <select
+          id="type"
+          [(ngModel)]="type"
+          name="type"
+          required
+          #typeInput="ngModel"
+          class="mt-1 block w-full border border-gray-300 p-2 rounded-md"
+        >
+          <option value="" disabled>Select Type</option>
+          <option value="Income">Income</option>
+          <option value="Expense">Expense</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="reoccuring" class="block text-sm font-medium"
+          >Reoccuring</label
+        >
+        <select
+          id="reoccuring"
+          [(ngModel)]="reoccuring"
+          name="reoccuring"
+          required
+          #reoccuringInput="ngModel"
+          class="mt-1 block w-full border border-gray-300 p-2 rounded-md"
+        >
+          <option value="" disabled>Select Reoccuring</option>
+          <option value="Daily">Daily</option>
+          <option value="Weekly">Weekly</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Yearly">Yearly</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="date" class="block text-sm font-medium">Date</label>
+        <input
+          type="date"
+          id="date"
+          [(ngModel)]="date"
+          name="date"
+          required
+          #dateInput="ngModel"
+          class="mt-1 block w-full border border-gray-300 p-2 rounded-md"
+        />
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="
+          descriptionInput.invalid ||
+          amountInput.invalid ||
+          typeInput.invalid ||
+          reoccuringInput.invalid ||
+          dateInput.invalid
+        "
+        class="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+      >
+        {{ editIndex === -1 ? "Add" : "Update" }}
+      </button>
+    </form>
+
+    <div class="mt-6">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (input)="applyFilter()"
+        placeholder="Search..."
+        class="mt-1 block w-full border border-gray-300 p-2 rounded-md"
+      />
+    </div>
+
+    <div class="flex justify-between p-2">
+      <div>
+        <label for="filterType" class="block text-sm font-medium">Type</label>
+        <select
+          id="filterType"
+          [(ngModel)]="filterType"
+          class="mt-1 block w-full border border-gray-300 p-2 rounded-md"
+          (change)="applyFilterSearch()"
+        >
+          <option value="All">All</option>
+          <option value="Income">Income</option>
+          <option value="Expense">Expense</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="filterReoccuring" class="block text-sm font-medium">
+          Reoccuring</label
+        >
+        <select
+          id="filterReoccuring"
+          [(ngModel)]="filterReoccuring"
+          class="mt-1 block w-full border border-gray-300 p-2 rounded-md"
+          (change)="applyFilterSearch()"
+        >
+          <option value="All">All</option>
+          <option value="Daily">Daily</option>
+          <option value="Weekly">Weekly</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Yearly">Yearly</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="text-xl font-semibold mt-8">Your Details</div>
+    <div class="flex gap-2 gap-y-3">
+      <ul class="mt-4 space-y-4">
+        <li
+          *ngFor="let item of paginatedData; let i = index"
+          class="flex justify-between bg-gray-100 p-4 rounded-md"
+        >
+          <span
+            >{{ item.description }} - Npr:{{ item.amount }} ({{ item.type }})
+            {{ item.reoccuring }}
+          </span>
+          <div>
+            <button
+              (click)="onEdit((currentPage - 1) * itemsPerPage + i)"
+              class="px-3 py-1 bg-yellow-400 text-white rounded-md mr-2"
+            >
+              Edit
+            </button>
+            <button
+              (click)="onDelete((currentPage - 1) * itemsPerPage + i)"
+              class="px-3 py-1 bg-red-500 text-white rounded-md"
+            >
+              Delete
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="mt-4 flex justify-between">
+      <button
+        (click)="goToPage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+        class="py-2 px-4 bg-gray-300 rounded-md"
+      >
+        Previous
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button
+        (click)="goToPage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+        class="py-2 px-4 bg-gray-300 rounded-md"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>
